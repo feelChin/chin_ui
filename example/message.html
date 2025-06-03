@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>消息气泡提示</title>
+  <link rel="stylesheet" href="./index.css">
+  <link rel="stylesheet" href="../build/index.css">
+</head>
+
+<body>
+  <div class="App center">
+    <div class="flex">
+      <div class="btn"></div>
+    </div>
+  </div>
+  <script type="module">
+    import { Message, Button } from '../build/index.js'
+
+    new Button({
+      el: '.btn',
+      text: '点我触发'
+    })
+
+    //----------------------------
+
+    // const message = new Message({
+    //   count: 7,
+    //   success_icon: 'https://img1.png',
+    //   error_icon: 'https://img2.png'
+    // })
+
+    const message = new Message()
+
+    document.querySelector('.btn').addEventListener('click', () => {
+      const num = Math.floor(Math.random() * 10)
+
+      if (num > 5) {
+        message.success(num)
+      } else {
+        message.error(num)
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>按钮</title>
+  <link rel="stylesheet" href="./index.css">
+  <link rel="stylesheet" href="../build/index.css">
+</head>
+
+<body>
+  <div class="App center">
+    <div class="flex">
+      <div class="btn1"></div>
+      <div class="space-w-20"></div>
+      <div class="btn2"></div>
+    </div>
+  </div>
+  <script type="module">
+    import { Button } from '../build/index.js'
+
+    let btn1 = new Button({
+      el: '.btn1',
+      text: '按钮'
+    })
+
+
+    document.querySelector('.btn1').addEventListener('click', () => {
+      if (btn1.loading) return
+
+      btn1.loading = true
+      setTimeout(() => {
+        btn1.loading = false
+      }, 2000);
+    })
+
+    //-----------------------------------
+
+
+    let btn2 = new Button({
+      el: '.btn2',
+      type: 'solid',
+      text: '按钮'
+    })
+
+
+    document.querySelector('.btn2').addEventListener('click', () => {
+      if (btn2.loading) return
+
+      btn2.loading = true
+      setTimeout(() => {
+        btn2.loading = false
+      }, 2000);
+    })
+  </script>
+</body>
+
+</html>

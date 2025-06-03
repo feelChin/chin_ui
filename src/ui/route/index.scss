@@ -1,0 +1,38 @@
+@use '../../style/util.scss' as var;
+@use '../../style/base.scss';
+
+
+.cui_route_page {
+  @include var.absolute;
+  color: white;
+  transition: var(--cui-time);
+
+
+  @keyframes enter {
+    0% {
+      transform: translateX(calc(var(--level) * 100%));
+    }
+
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes leave {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(calc(var(--level) * -100%));
+    }
+  }
+
+  &.enter {
+    animation: enter .4s forwards;
+  }
+
+  &.leave {
+    animation: leave .4s forwards;
+  }
+}

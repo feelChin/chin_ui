@@ -1,0 +1,39 @@
+@use '../../style/util.scss' as var;
+@use '../../style/base.scss';
+
+.cui-modal {
+  --cui-modal-shadow: drop-shadow(0 0 10px rgba(0, 0, 0, .2))
+}
+
+.cui-modal {
+  @include var.fixed;
+  @include var.ov0;
+  z-index: 999;
+  pointer-events: none;
+  transition: var(--cui-time);
+
+  &.enter {
+    @include var.ov1;
+    pointer-events: auto;
+
+    .cui-modal-wrapper {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  .cui-modal-bg {
+    @include var.absolute;
+    background: rgba(0, 0, 0, .3);
+  }
+
+  .cui-modal-wrapper {
+    position: absolute;
+    --top: 30%;
+    --left: 30%;
+    background: var(--cui-background-base);
+    filter: var(--cui-modal-shadow);
+    border-radius: var(--cui-radius);
+    transform: translate(-50%, -50%) scale(.01);
+    transition: var(--cui-time);
+  }
+}

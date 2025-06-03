@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>弹窗</title>
+  <link rel="stylesheet" href="./index.css">
+  <link rel="stylesheet" href="../build/index.css">
+</head>
+
+<body>
+  <div class="App center">
+    <div class="flex">
+      <div class="btn"></div>
+      <div class="space-w-20"></div>
+      <div class="btn3"></div>
+    </div>
+  </div>
+  <script type="module">
+    import { Modal, Button } from '../build/index.js'
+
+    new Button({
+      el: '.btn',
+      text: '点我触发静态'
+    })
+
+    document.querySelector('.btn').addEventListener('click', () => {
+      Modal.create({
+        className: 'center',
+        html: `<div class="btn1"></div><div class="space-w-20"></div><div class="btn2"></div>`,
+        cb: () => {
+          new Button({
+            el: '.btn1',
+            text: '下一步'
+          })
+
+          new Button({
+            el: '.btn2',
+            text: '关闭弹窗'
+          })
+
+          document.querySelector('.btn1').addEventListener('click', () => {
+            Modal.create({
+              width: 600,
+              height: 200,
+              className: 'center',
+              html: `第二个弹窗 3s后自动关闭`,
+              cb: () => {
+                setTimeout(() => {
+                  Modal.cancel()
+                }, 3000);
+              }
+            })
+          })
+
+
+          document.querySelector('.btn2').addEventListener('click', () => {
+            Modal.cancel()
+          })
+        }
+      })
+    })
+
+    //----------------------------
+
+    const modal = new Modal({
+      width: 700,
+      height: 500,
+      className: 'center',
+      html: `<div class="btn4"></div><div class="space-w-20"></div> <div class="btn5"></div>`,
+      cb: () => {
+        new Button({
+          el: '.btn4',
+          text: '隐藏弹窗'
+        })
+
+        new Button({
+          el: '.btn5',
+          text: '销毁弹窗'
+        })
+
+        document.querySelector('.btn4').addEventListener('click', () => {
+          modal.hide()
+        })
+
+        document.querySelector('.btn5').addEventListener('click', async () => {
+          await modal.hide()
+          //做点其他事 如销毁 开启其它弹窗
+          modal.el.remove()
+          // modal_other.show()
+        })
+      }
+    })
+
+
+    new Button({
+      el: '.btn3',
+      text: '触发隐藏的弹窗'
+    })
+
+    document.querySelector('.btn3').addEventListener('click', () => {
+      //点击开启
+      modal.show()
+    })
+
+  </script>
+</body>
+
+</html>

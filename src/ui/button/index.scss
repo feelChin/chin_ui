@@ -1,0 +1,78 @@
+@use '../../style/util.scss' as var;
+@use '../../style/base.scss';
+
+.cui-button {
+  --cui-button-height: 46px;
+}
+
+.cui-button {
+  cursor: pointer;
+  width: auto;
+  padding: 0 var(--cui-padding);
+  height: var(--cui-button-height);
+  border-radius: var(--cui-radius);
+  font-size: var(--cui-font-size);
+  @include var.flex-center;
+  transition: var(--cui-time);
+
+  &.primary {
+    color: var(--cui-color);
+    background: var(--cui-background);
+
+    span {
+      border-color: var(--cui-color);
+    }
+
+    &:hover,
+    &.active {
+      background: var(--cui-background-active);
+    }
+  }
+
+  &.solid {
+    border: 1px solid var(--cui-background);
+    color: var(--cui-background);
+
+    i {
+      border-color: var(--cui-background);
+    }
+
+    &:hover,
+    &.active {
+      border-color: var(--cui-background-active);
+      color: var(--cui-background-active);
+    }
+  }
+
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  &.loading {
+    pointer-events: none;
+
+    i {
+      display: block;
+    }
+  }
+
+  i {
+    width: var(--cui-font-size);
+    height: var(--cui-font-size);
+    margin-left: 4px;
+    border: 2px solid;
+    border-bottom-color: transparent !important;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    display: none;
+  }
+
+}

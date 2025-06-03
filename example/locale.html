@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>国际化</title>
+  <link rel="stylesheet" href="./index.css">
+  <link rel="stylesheet" href="../build/index.css">
+</head>
+
+<body>
+  <div class="App center column">
+    <div class="flex text">
+
+    </div>
+    <div class="space-h-20"></div>
+    <div class="flex">
+      <div class="btn"></div>
+      <div class="space-w-20"></div>
+      <div class="btn1"></div>
+    </div>
+  </div>
+  <script type="module">
+    import { Locale, Button } from '../build/index.js'
+
+    new Button({
+      el: '.btn',
+      text: '切换中文'
+    })
+
+    new Button({
+      el: '.btn1',
+      text: '切换英文'
+    })
+
+    const cn = {
+      "home": {
+        "我的": "我的",
+        "名字": "名字"
+      },
+      "about": {
+        "未来": "未来"
+      }
+    }
+
+    const en = {
+      "home": {
+        "我的": "my",
+        "名字": "name"
+      },
+      "about": {
+        "未来": "future"
+      }
+    }
+
+    const locale = new Locale({ cn, en })
+
+    const t = locale.getTranslations('home')
+
+    document.querySelector('.text').innerHTML = `${t("我的")} ${t("名字")}`
+
+    document.querySelector('.btn').addEventListener('click', () => {
+      locale.lang = 'cn'
+    })
+
+    document.querySelector('.btn1').addEventListener('click', () => {
+      locale.lang = 'en'
+    })
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>路由切换</title>
+  <link rel="stylesheet" href="./index.css">
+  <link rel="stylesheet" href="../build/index.css">
+</head>
+<style>
+  .App {
+    flex-direction: column;
+  }
+
+  nav .active {
+    color: red;
+  }
+
+  nav {
+    display: flex;
+  }
+
+  nav div {
+    cursor: pointer;
+    margin: 0 26px;
+    transition: .4s;
+  }
+
+  .render {
+    margin-top: 15px;
+    position: relative;
+    width: 300px;
+    height: 200px;
+    background: #f9f9f9;
+    overflow: hidden;
+  }
+
+  .page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .page1 {
+    background: #f03f03;
+  }
+
+  .page2 {
+    background: #e28e72;
+  }
+
+  .page3 {
+    background: #e3ec59;
+  }
+</style>
+
+<body>
+  <div class="App center">
+    <nav></nav>
+    <div class="render"></div>
+    <div class="space-h-20"></div>
+    <div class="flex">
+      <div class="btn"></div>
+      <div class="space-w-20"></div>
+      <div class="btn1"></div>
+    </div>
+  </div>
+  <script type="module">
+    import { Route, Button } from '../build/index.js'
+
+    const app = new Route({
+      el: '.render',
+      type: 'history',
+      animation: true,
+      map: [
+        {
+          path: '',
+          name: '首页',
+          component: () => {
+            return `<div class="page page1">首页</div>`
+          }
+        },
+        {
+          path: 'about',
+          name: '关于我们',
+          component: () => {
+            return `<div class="page page2">关于我们</div>`
+          }
+        },
+        {
+          path: 'contact',
+          name: '联系我们',
+          component: () => {
+            return `<div class="page page3">联系我们</div>`
+          }
+        }
+      ],
+      nav: {
+        el: 'nav',
+        render: (v) => {
+          return `<div route-link>${v.name}</div>`
+        }
+      },
+      notfound() {
+        return `<b style="color:red">404</b>`
+      },
+      transitionEnd(v) {
+        // console.log(v);
+      }
+    })
+
+
+    new Button({
+      el: '.btn',
+      text: "跳转到首页"
+    })
+
+    new Button({
+      el: '.btn1',
+      text: "跳转到关于我们"
+    })
+
+    document.querySelector('.btn').addEventListener('click', () => {
+      app.routeGo('')
+    })
+
+    document.querySelector('.btn1').addEventListener('click', () => {
+      app.routeGo('about')
+    })
+
+  </script>
+</body>
+
+</html>

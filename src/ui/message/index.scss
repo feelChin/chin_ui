@@ -1,0 +1,88 @@
+@use '../../style/util.scss' as var;
+@use '../../style/base.scss';
+
+.cui-message {
+  --cui-message-top: 66px;
+  --cui-message-item-space: 10px;
+  --cui-message-item-height: 50px;
+  --cui-message-item-max-width: 300px;
+  --cui-message-item-shadow: drop-shadow(0 4px 6px rgba(0, 0, 0, .2))
+}
+
+.cui-message {
+  position: fixed;
+  top: var(--cui-message-top);
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 999;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+
+  @for $i from 1 through 7 {
+    .cui-message-item:nth-child(#{$i}) {
+      top: calc((var(--cui-message-item-height) + var(--cui-message-item-space)) *(#{$i} - 1));
+    }
+  }
+
+  .cui-message-item {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    max-width: var(--cui-message-item-max-width);
+    height: var(--cui-message-item-height);
+    border-radius: var(--cui-radius-big);
+    padding: 0 var(--cui-padding);
+    background: var(--cui-background-base);
+    opacity: 0;
+    animation: opacity .5s forwards, opacityEnd .5s 2s forwards;
+    filter: var(--cui-message-item-shadow);
+    white-space: nowrap;
+
+    @keyframes opacity {
+      0% {
+        opacity: 0;
+        transform: translateY(30%);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0%);
+      }
+    }
+
+    @keyframes opacityEnd {
+      0% {
+        opacity: 1;
+        transform: translateY(0%);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-30%);
+      }
+    }
+
+    .icon {
+      width: calc(var(--cui-font-size) * 2);
+      height: calc(var(--cui-font-size) * 2);
+      background-size: cover !important;
+      margin-right: var(--cui-message-item-space);
+    }
+
+    .text {
+      flex: 1;
+      font-size: var(--cui-font-size);
+      color: var(--cui-color-text);
+
+      p {
+        max-width: calc(var(--cui-message-item-max-width) * .72);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+  }
+}
