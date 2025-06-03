@@ -1,8 +1,17 @@
 {
   "name": "chin-ui",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "个人ui库",
   "main": "index.js",
+  "keywords": [
+    "ui",
+    "feelChin",
+    "chin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/feelChin/chin_ui.git"
+  },
   "scripts": {
     "start": "vite",
     "build": "vite build"

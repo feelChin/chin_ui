@@ -3,7 +3,7 @@ import path from "path";
 
 export default defineConfig({
 	build: {
-		outDir: "build",
+		outDir: "./",
 		lib: {
 			entry: path.resolve(__dirname, "src/index.js"),
 			formats: ["es"],
