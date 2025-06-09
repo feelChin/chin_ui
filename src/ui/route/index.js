@@ -161,7 +161,12 @@ export default class Route {
 			leave_div.className = "cui_route_page leave";
 			this.root.removeChild(prve_leave);
 		} else {
-			leave_div = createDiv("leave");
+			if (prve_leave) {
+				leave_div = prve_leave;
+				leave_div.className = "cui_route_page leave";
+			} else {
+				leave_div = createDiv("leave");
+			}
 			this.root.appendChild(leave_div);
 		}
 

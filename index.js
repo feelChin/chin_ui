@@ -2,8 +2,8 @@ var p = Object.defineProperty;
 var w = (h, e, t) => e in h ? p(h, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : h[e] = t;
 var u = (h, e, t) => w(h, typeof e != "symbol" ? e + "" : e, t);
 class B {
-  constructor({ el: e, type: t = "primary", text: s = "" }) {
-    if (this.root = document.querySelector(e), this.type = t, this.text = s, this._loading = !1, !this.root) throw "没有传入dom";
+  constructor({ el: e, type: t = "primary", text: i = "" }) {
+    if (this.root = document.querySelector(e), this.type = t, this.text = i, this._loading = !1, !this.root) throw "没有传入dom";
     this.init();
   }
   get loading() {
@@ -22,12 +22,12 @@ class C {
   constructor(e) {
     const {
       count: t = 5,
-      success_icon: s = v,
-      error_icon: i = E
+      success_icon: i = v,
+      error_icon: s = E
     } = e || {};
     if (this.MAX = t, this.seed = 0, this.pool = {}, t > 7)
       throw "超出气泡最大限制";
-    this.MessageElement || (this.MessageElement = document.createElement("secition"), this.MessageElement.className = "cui-message", document.body.appendChild(this.MessageElement)), this.success_icon = s, this.error_icon = i, this.init();
+    this.MessageElement || (this.MessageElement = document.createElement("secition"), this.MessageElement.className = "cui-message", document.body.appendChild(this.MessageElement)), this.success_icon = i, this.error_icon = s, this.init();
   }
   init() {
     let e = document.createElement("img");
@@ -37,25 +37,25 @@ class C {
   }
   render(e, t) {
     this.seed += 1;
-    const s = document.createElement("div");
-    s.className = `cui-message-item ${"seed" + this.seed}`, s.innerHTML = `<div class="icon" style="background: url(${e});"></div>
+    const i = document.createElement("div");
+    i.className = `cui-message-item ${"seed" + this.seed}`, i.innerHTML = `<div class="icon" style="background: url(${e});"></div>
             <div class="text">
 							<p>${t}</p>
 						</div>`, this.pool[this.seed] = {
-      el: s,
+      el: i,
       status: -1,
       show: !1,
       seed: this.seed
     };
-    const i = this.pool[this.seed];
-    i.el.addEventListener("animationend", () => {
+    const s = this.pool[this.seed];
+    s.el.addEventListener("animationend", () => {
       var n;
-      if (i.status += 1, i.status === 1) {
-        delete this.pool[i.seed], (n = document.querySelector(".seed" + i.seed)) == null || n.remove();
+      if (s.status += 1, s.status === 1) {
+        delete this.pool[s.seed], (n = document.querySelector(".seed" + s.seed)) == null || n.remove();
         const a = Object.values(this.pool).find((r) => !r.show);
         a && (this.MessageElement.appendChild(a.el), this.pool[a.seed].show = !0);
       }
-    }), Object.keys(this.pool).length <= this.MAX && (this.MessageElement.appendChild(s), this.pool[this.seed].show = !0);
+    }), Object.keys(this.pool).length <= this.MAX && (this.MessageElement.appendChild(i), this.pool[this.seed].show = !0);
   }
   success(e) {
     this.render(this.success_icon, e);
@@ -91,14 +91,14 @@ const o = class o {
   initInstance(e) {
     const {
       width: t = 400,
-      height: s = 360,
-      html: i = "",
+      height: i = 360,
+      html: s = "",
       className: n = "",
       cb: a,
       visable: r = !1,
       effectNum: A = (g) => g + "px"
     } = e;
-    this.w = A(t), this.h = A(s), this.html = i, this.className = n, this.cb = a, this.visable = r, r || this.add();
+    this.w = A(t), this.h = A(i), this.html = s, this.className = n, this.cb = a, this.visable = r, r || this.add();
   }
   async add() {
     await this.remove();
@@ -143,23 +143,23 @@ class L {
   constructor({
     el: e,
     type: t = "hash",
-    map: s = [],
-    nav: i = {},
+    map: i = [],
+    nav: s = {},
     transitionEnd: n = () => {
     },
     animation: a = !0,
     notfound: r = () => 404
   }) {
-    this.root = document.querySelector(e), this.type = t, this.pool = [""], this.routerMap = [...s], this.nav = i, this.transitionEnd = n, this.notfound = r, this.animation = a, this._init = !1, this.init();
+    this.root = document.querySelector(e), this.type = t, this.pool = [""], this.routerMap = [...i], this.nav = s, this.transitionEnd = n, this.notfound = r, this.animation = a, this._init = !1, this.init();
   }
   renderNav() {
-    const { el: e, render: t } = this.nav, s = document.querySelector(e);
+    const { el: e, render: t } = this.nav, i = document.querySelector(e);
     if (!e)
       throw "没有传入nav el";
-    let i = "";
+    let s = "";
     this.routerMap.forEach((n) => {
-      typeof t == "function" ? i += t(n) : i += `<div route-link>${n.name}</div>`;
-    }), s.innerHTML = i;
+      typeof t == "function" ? s += t(n) : s += `<div route-link>${n.name}</div>`;
+    }), i.innerHTML = s;
   }
   get map() {
     return this.routerMap;
@@ -170,40 +170,40 @@ class L {
   init() {
     this.renderNav();
     let e = {};
-    this.navItem = document.querySelectorAll("[route-link]"), this.navItem.forEach((t, s) => {
-      const { path: i, component: n } = this.routerMap[s];
-      e[i] = {
+    this.navItem = document.querySelectorAll("[route-link]"), this.navItem.forEach((t, i) => {
+      const { path: s, component: n } = this.routerMap[i];
+      e[s] = {
         render: n,
         el: t,
-        index: s
+        index: i
       }, t.addEventListener("click", () => {
-        this.routeGo(i);
+        this.routeGo(s);
       });
     }), this.routerMapData = e, this.route(), this.type === d ? window.addEventListener("popstate", this.route.bind(this)) : window.addEventListener("hashchange", this.route.bind(this));
   }
   routeGo(e) {
-    var i, n;
-    const [t, s] = this.pool;
-    s !== e && ((n = this.navItem[(i = this.routerMapData[s]) == null ? void 0 : i.index]) == null || n.classList.remove("active"), this.type === d ? (window.history.replaceState(null, `page ${e}`, e || "/"), this.route()) : window.location.href = "#" + e);
+    var s, n;
+    const [t, i] = this.pool;
+    i !== e && ((n = this.navItem[(s = this.routerMapData[i]) == null ? void 0 : s.index]) == null || n.classList.remove("active"), this.type === d ? (window.history.replaceState(null, `page ${e}`, e || "/"), this.route()) : window.location.href = "#" + e);
   }
   route() {
     var a, r;
     const e = this.type === d ? window.location.pathname : window.location.hash.substr(1);
     let t = "";
     e && (t = e.replace("/", ""));
-    let { render: s, index: i } = this.routerMapData[t] || {};
-    this.pool.push(t), this.pool.length > 2 && this.pool.shift(), s || (s = this.notfound);
+    let { render: i, index: s } = this.routerMapData[t] || {};
+    this.pool.push(t), this.pool.length > 2 && this.pool.shift(), i || (i = this.notfound);
     const n = (a = this.routerMapData[this.pool[0]]) == null ? void 0 : a.index;
-    this.root.style.setProperty("--level", n > i ? -1 : 1), this.animation ? this.createEffectDom(s) : this.root.innerHTML = s(), this.transitionEnd(t), (r = this.navItem[i]) == null || r.classList.add("active"), this._init = !0;
+    this.root.style.setProperty("--level", n > s ? -1 : 1), this.animation ? this.createEffectDom(i) : this.root.innerHTML = i(), this.transitionEnd(t), (r = this.navItem[s]) == null || r.classList.add("active"), this._init = !0;
   }
   createEffectDom(e) {
     clearTimeout(this.timer);
     let t;
-    const s = (a) => {
+    const i = (a) => {
       const r = document.createElement("div");
       return r.className = "cui_route_page " + (this._init ? a : " init"), r.innerHTML = a === "enter" ? e() : "", r;
-    }, [i, n] = this.root.children;
-    n ? (t = n, t.className = "cui_route_page leave", this.root.removeChild(i)) : (t = s("leave"), this.root.appendChild(t)), this.root.appendChild(s("enter")), this.timer = setTimeout(() => {
+    }, [s, n] = this.root.children;
+    n ? (t = n, t.className = "cui_route_page leave", this.root.removeChild(s)) : (s ? (t = s, t.className = "cui_route_page leave") : t = i("leave"), this.root.appendChild(t)), this.root.appendChild(i("enter")), this.timer = setTimeout(() => {
       this.root.removeChild(t);
     }, 3e3);
   }
@@ -217,12 +217,12 @@ class Q {
     this.locales = e, this._lang = Object.keys(e)[0];
   }
   getTranslations(e) {
-    return (t, s = "p") => {
+    return (t, i = "p") => {
       l += 1;
-      let i = {};
+      let s = {};
       return Object.keys(this.locales).forEach((n) => {
-        i[n] = this.locales[n][e][t];
-      }), c[l] = i, `<${s} data-locale="${l}">${i[this._lang] || ""}</${s}>`;
+        s[n] = this.locales[n][e][t];
+      }), c[l] = s, `<${i} data-locale="${l}">${s[this._lang] || ""}</${i}>`;
     };
   }
   get lang() {
