@@ -31,6 +31,7 @@ export default class Locale {
 	}
 
 	set lang(v) {
+		localStorage.setItem("lang", v);
 		this._lang = v;
 		this.render();
 	}
@@ -46,5 +47,6 @@ export default class Locale {
 	unload() {
 		Object.keys(pool).forEach((key) => delete pool[key]);
 		seed = 0;
+		localStorage.removeItem("lang");
 	}
 }
