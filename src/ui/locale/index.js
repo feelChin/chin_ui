@@ -8,20 +8,20 @@ export default class Locale {
 		}
 
 		this.locales = locales;
-		this._lang = Object.keys(locales)[0];
+		this.localesKey = Object.keys(this.locales);
+		this._lang = this.localesKey[0];
 	}
 
 	getTranslations(key) {
 		return (str, tag = "p") => {
 			seed += 1;
+			const obj = {};
 
-			let obj = {};
-			Object.keys(this.locales).forEach((el) => {
+			this.localesKey.forEach((el) => {
 				obj[el] = this.locales[el][key][str];
 			});
 
 			pool[seed] = obj;
-
 			return `<${tag} data-locale="${seed}">${obj[this._lang] || ""}</${tag}>`;
 		};
 	}
@@ -31,15 +31,39 @@ export default class Locale {
 	}
 
 	set lang(v) {
-		localStorage.setItem("lang", v);
-		this._lang = v;
+		let value = this.localesKey.includes(v) ? v : this.localesKey[0];
+
+		this._lang = value;
+
+		//预设国际化
+		const presetDom = document.querySelectorAll("[data-locale-preset]");
+		if (!!presetDom.length) {
+			presetDom.forEach((item) => {
+				seed += 1;
+				const presetObj = {};
+				const text = item.innerText;
+				const presetKey = item.getAttribute("data-locale-preset");
+
+				Object.keys(this.locales).forEach((el) => {
+					presetObj[el] = this.locales[el][presetKey][text];
+				});
+
+				pool[seed] = presetObj;
+				item.setAttribute("data-locale", seed);
+				item.removeAttribute("data-locale-preset");
+			});
+		}
+
+		localStorage.setItem("lang", value);
 		this.render();
 	}
 
 	render() {
 		document.querySelectorAll("[data-locale]").forEach((el) => {
 			const key = el.getAttribute("data-locale");
-
+			if (!key) {
+				throw "no data-locale key";
+			}
 			el.innerText = pool[key][this.lang] || "";
 		});
 	}
