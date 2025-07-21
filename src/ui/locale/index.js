@@ -13,7 +13,7 @@ export default class Locale {
 	}
 
 	getTranslations(key) {
-		return (str, tag = "p") => {
+		return (str, tag = "p", type = "text") => {
 			seed += 1;
 			const obj = {};
 
@@ -22,6 +22,13 @@ export default class Locale {
 			});
 
 			pool[seed] = obj;
+
+			if (tag === "input") {
+				return `<input type="${type}" data-locale="${seed}" placeholder="${
+					obj[this._lang] || ""
+				}" />`;
+			}
+
 			return `<${tag} data-locale="${seed}">${obj[this._lang] || ""}</${tag}>`;
 		};
 	}
@@ -41,7 +48,7 @@ export default class Locale {
 			presetDom.forEach((item) => {
 				seed += 1;
 				const presetObj = {};
-				const text = item.innerText;
+				const text = item.placeholder || item.innerText;
 				const presetKey = item.getAttribute("data-locale-preset");
 
 				Object.keys(this.locales).forEach((el) => {
@@ -64,7 +71,11 @@ export default class Locale {
 			if (!key) {
 				throw "no data-locale key";
 			}
-			el.innerText = pool[key][this.lang] || "";
+
+			const value = pool[key][this.lang] || "";
+
+			if (el.innerText) el.innerText = value;
+			if (el.placeholder) el.placeholder = value;
 		});
 	}
 

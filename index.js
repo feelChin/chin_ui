@@ -2,8 +2,8 @@ var p = Object.defineProperty;
 var v = (l, e, t) => e in l ? p(l, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : l[e] = t;
 var u = (l, e, t) => v(l, typeof e != "symbol" ? e + "" : e, t);
 class B {
-  constructor({ el: e, type: t = "primary", text: i = "" }) {
-    if (this.root = document.querySelector(e), this.type = t, this.text = i, this._loading = !1, !this.root) throw "没有传入dom";
+  constructor({ el: e, type: t = "primary", text: s = "" }) {
+    if (this.root = document.querySelector(e), this.type = t, this.text = s, this._loading = !1, !this.root) throw "没有传入dom";
     this.init();
   }
   get loading() {
@@ -22,12 +22,12 @@ class C {
   constructor(e) {
     const {
       count: t = 5,
-      success_icon: i = w,
-      error_icon: s = f
+      success_icon: s = w,
+      error_icon: i = f
     } = e || {};
     if (this.MAX = t, this.seed = 0, this.pool = {}, t > 7)
       throw "超出气泡最大限制";
-    this.MessageElement || (this.MessageElement = document.createElement("secition"), this.MessageElement.className = "cui-message", document.body.appendChild(this.MessageElement)), this.success_icon = i, this.error_icon = s, this.init();
+    this.MessageElement || (this.MessageElement = document.createElement("secition"), this.MessageElement.className = "cui-message", document.body.appendChild(this.MessageElement)), this.success_icon = s, this.error_icon = i, this.init();
   }
   init() {
     let e = document.createElement("img");
@@ -37,25 +37,25 @@ class C {
   }
   render(e, t) {
     this.seed += 1;
-    const i = document.createElement("div");
-    i.className = `cui-message-item ${"seed" + this.seed}`, i.innerHTML = `<div class="icon" style="background: url(${e});"></div>
+    const s = document.createElement("div");
+    s.className = `cui-message-item ${"seed" + this.seed}`, s.innerHTML = `<div class="icon" style="background: url(${e});"></div>
             <div class="text">
 							<p>${t}</p>
 						</div>`, this.pool[this.seed] = {
-      el: i,
+      el: s,
       status: -1,
       show: !1,
       seed: this.seed
     };
-    const s = this.pool[this.seed];
-    s.el.addEventListener("animationend", () => {
+    const i = this.pool[this.seed];
+    i.el.addEventListener("animationend", () => {
       var n;
-      if (s.status += 1, s.status === 1) {
-        delete this.pool[s.seed], (n = document.querySelector(".seed" + s.seed)) == null || n.remove();
-        const a = Object.values(this.pool).find((r) => !r.show);
-        a && (this.MessageElement.appendChild(a.el), this.pool[a.seed].show = !0);
+      if (i.status += 1, i.status === 1) {
+        delete this.pool[i.seed], (n = document.querySelector(".seed" + i.seed)) == null || n.remove();
+        const o = Object.values(this.pool).find((r) => !r.show);
+        o && (this.MessageElement.appendChild(o.el), this.pool[o.seed].show = !0);
       }
-    }), Object.keys(this.pool).length <= this.MAX && (this.MessageElement.appendChild(i), this.pool[this.seed].show = !0);
+    }), Object.keys(this.pool).length <= this.MAX && (this.MessageElement.appendChild(s), this.pool[this.seed].show = !0);
   }
   success(e) {
     this.render(this.success_icon, e);
@@ -64,26 +64,26 @@ class C {
     this.render(this.error_icon, e);
   }
 }
-const o = class o {
+const a = class a {
   constructor(e) {
     this.seed = 0, this.initInstance(e), this.init();
   }
   static create(e) {
-    if (!o.instance)
-      o.instance = new o({ ...e, visable: !0 });
+    if (!a.instance)
+      a.instance = new a({ ...e, visable: !0 });
     else {
-      for (const t in o.instance)
-        ["seed", "el"].includes(t) || delete o.instance[t];
-      o.instance.initInstance({ ...e, visable: !0 });
+      for (const t in a.instance)
+        ["seed", "el"].includes(t) || delete a.instance[t];
+      a.instance.initInstance({ ...e, visable: !0 });
     }
-    return o.instance.add();
+    return a.instance.add();
   }
   static cancel(e) {
-    o.instance.el.classList.remove("enter");
+    a.instance.el.classList.remove("enter");
     const t = () => {
-      o.instance.seed = 0, o.instance.el.innerHTML = "", o.instance.el.removeEventListener("transitionend", t), e && e();
+      a.instance.seed = 0, a.instance.el.innerHTML = "", a.instance.el.removeEventListener("transitionend", t), e && e();
     };
-    o.instance.el.addEventListener("transitionend", t);
+    a.instance.el.addEventListener("transitionend", t);
   }
   init() {
     this.el = document.createElement("section"), this.el.className = "cui-modal", document.body.appendChild(this.el);
@@ -91,14 +91,14 @@ const o = class o {
   initInstance(e) {
     const {
       width: t = 400,
-      height: i = 360,
-      html: s = "",
+      height: s = 360,
+      html: i = "",
       className: n = "",
-      cb: a,
+      cb: o,
       visable: r = !1,
       effectNum: h = (g) => g + "px"
     } = e;
-    this.w = h(t), this.h = h(i), this.html = s, this.className = n, this.cb = a, this.visable = r, r || this.add();
+    this.w = h(t), this.h = h(s), this.html = i, this.className = n, this.cb = o, this.visable = r, r || this.add();
   }
   async add() {
     await this.remove();
@@ -115,7 +115,7 @@ const o = class o {
         e();
         return;
       }
-      o.cancel(() => {
+      a.cancel(() => {
         requestAnimationFrame(() => {
           e();
         });
@@ -137,29 +137,29 @@ const o = class o {
     });
   }
 };
-u(o, "instance", null);
-let m = o, A = "history";
+u(a, "instance", null);
+let m = a, A = "history";
 class L {
   constructor({
     el: e,
     type: t = "hash",
-    map: i = [],
-    nav: s = {},
+    map: s = [],
+    nav: i = {},
     transitionEnd: n = () => {
     },
-    animation: a = !0,
+    animation: o = !0,
     notfound: r = () => 404
   }) {
-    this.root = document.querySelector(e), this.type = t, this.pool = [""], this.routerMap = [...i], this.nav = s, this.transitionEnd = n, this.notfound = r, this.animation = a, this._init = !1, this.init();
+    this.root = document.querySelector(e), this.type = t, this.pool = [""], this.routerMap = [...s], this.nav = i, this.transitionEnd = n, this.notfound = r, this.animation = o, this._init = !1, this.init();
   }
   renderNav() {
-    const { el: e, render: t } = this.nav, i = document.querySelector(e);
+    const { el: e, render: t } = this.nav, s = document.querySelector(e);
     if (!e)
       throw "没有传入nav el";
-    let s = "";
+    let i = "";
     this.routerMap.forEach((n) => {
-      typeof t == "function" ? s += t(n) : s += `<div route-link>${n.name}</div>`;
-    }), i.innerHTML = s;
+      typeof t == "function" ? i += t(n) : i += `<div route-link>${n.name}</div>`;
+    }), s.innerHTML = i;
   }
   get map() {
     return this.routerMap;
@@ -170,40 +170,40 @@ class L {
   init() {
     this.renderNav();
     let e = {};
-    this.navItem = document.querySelectorAll("[route-link]"), this.navItem.forEach((t, i) => {
-      const { path: s, component: n } = this.routerMap[i];
-      e[s] = {
+    this.navItem = document.querySelectorAll("[route-link]"), this.navItem.forEach((t, s) => {
+      const { path: i, component: n } = this.routerMap[s];
+      e[i] = {
         render: n,
         el: t,
-        index: i
+        index: s
       }, t.addEventListener("click", () => {
-        this.routeGo(s);
+        this.routeGo(i);
       });
     }), this.routerMapData = e, this.route(), this.type === A ? window.addEventListener("popstate", this.route.bind(this)) : window.addEventListener("hashchange", this.route.bind(this));
   }
   routeGo(e) {
-    var s, n;
-    const [t, i] = this.pool;
-    i !== e && ((n = this.navItem[(s = this.routerMapData[i]) == null ? void 0 : s.index]) == null || n.classList.remove("active"), this.type === A ? (window.history.replaceState(null, `page ${e}`, e || "/"), this.route()) : window.location.href = "#" + e);
+    var i, n;
+    const [t, s] = this.pool;
+    s !== e && ((n = this.navItem[(i = this.routerMapData[s]) == null ? void 0 : i.index]) == null || n.classList.remove("active"), this.type === A ? (window.history.replaceState(null, `page ${e}`, e || "/"), this.route()) : window.location.href = "#" + e);
   }
   route() {
-    var a, r;
+    var o, r;
     const e = this.type === A ? window.location.pathname : window.location.hash.substr(1);
     let t = "";
     e && (t = e.replace("/", ""));
-    let { render: i, index: s } = this.routerMapData[t] || {};
-    this.pool.push(t), this.pool.length > 2 && this.pool.shift(), i || (i = this.notfound);
-    const n = (a = this.routerMapData[this.pool[0]]) == null ? void 0 : a.index;
-    this.root.style.setProperty("--level", n > s ? -1 : 1), this.animation ? this.createEffectDom(i) : this.root.innerHTML = i(), this.transitionEnd(t), (r = this.navItem[s]) == null || r.classList.add("active"), this._init = !0;
+    let { render: s, index: i } = this.routerMapData[t] || {};
+    this.pool.push(t), this.pool.length > 2 && this.pool.shift(), s || (s = this.notfound);
+    const n = (o = this.routerMapData[this.pool[0]]) == null ? void 0 : o.index;
+    this.root.style.setProperty("--level", n > i ? -1 : 1), this.animation ? this.createEffectDom(s) : this.root.innerHTML = s(), this.transitionEnd(t), (r = this.navItem[i]) == null || r.classList.add("active"), this._init = !0;
   }
   createEffectDom(e) {
     clearTimeout(this.timer);
     let t;
-    const i = (a) => {
+    const s = (o) => {
       const r = document.createElement("div");
-      return r.className = "cui_route_page " + (this._init ? a : " init"), r.innerHTML = a === "enter" ? e() : "", r;
-    }, [s, n] = this.root.children;
-    n ? (t = n, t.className = "cui_route_page leave", this.root.removeChild(s)) : (s ? (t = s, t.className = "cui_route_page leave") : t = i("leave"), this.root.appendChild(t)), this.root.appendChild(i("enter")), this.timer = setTimeout(() => {
+      return r.className = "cui_route_page " + (this._init ? o : " init"), r.innerHTML = o === "enter" ? e() : "", r;
+    }, [i, n] = this.root.children;
+    n ? (t = n, t.className = "cui_route_page leave", this.root.removeChild(i)) : (i ? (t = i, t.className = "cui_route_page leave") : t = s("leave"), this.root.appendChild(t)), this.root.appendChild(s("enter")), this.timer = setTimeout(() => {
       this.root.removeChild(t);
     }, 3e3);
   }
@@ -217,12 +217,12 @@ class I {
     this.locales = e, this.localesKey = Object.keys(this.locales), this._lang = this.localesKey[0];
   }
   getTranslations(e) {
-    return (t, i = "p") => {
+    return (t, s = "p", i = "text") => {
       c += 1;
-      const s = {};
-      return this.localesKey.forEach((n) => {
-        s[n] = this.locales[n][e][t];
-      }), d[c] = s, `<${i} data-locale="${c}">${s[this._lang] || ""}</${i}>`;
+      const n = {};
+      return this.localesKey.forEach((o) => {
+        n[o] = this.locales[o][e][t];
+      }), d[c] = n, s === "input" ? `<input type="${i}" data-locale="${c}" placeholder="${n[this._lang] || ""}" />` : `<${s} data-locale="${c}">${n[this._lang] || ""}</${s}>`;
     };
   }
   get lang() {
@@ -231,13 +231,13 @@ class I {
   set lang(e) {
     let t = this.localesKey.includes(e) ? e : this.localesKey[0];
     this._lang = t;
-    const i = document.querySelectorAll("[data-locale-preset]");
-    i.length && i.forEach((s) => {
+    const s = document.querySelectorAll("[data-locale-preset]");
+    s.length && s.forEach((i) => {
       c += 1;
-      const n = {}, a = s.innerText, r = s.getAttribute("data-locale-preset");
+      const n = {}, o = i.placeholder || i.innerText, r = i.getAttribute("data-locale-preset");
       Object.keys(this.locales).forEach((h) => {
-        n[h] = this.locales[h][r][a];
-      }), d[c] = n, s.setAttribute("data-locale", c), s.removeAttribute("data-locale-preset");
+        n[h] = this.locales[h][r][o];
+      }), d[c] = n, i.setAttribute("data-locale", c), i.removeAttribute("data-locale-preset");
     }), localStorage.setItem("lang", t), this.render();
   }
   render() {
@@ -245,7 +245,8 @@ class I {
       const t = e.getAttribute("data-locale");
       if (!t)
         throw "no data-locale key";
-      e.innerText = d[t][this.lang] || "";
+      const s = d[t][this.lang] || "";
+      e.innerText && (e.innerText = s), e.placeholder && (e.placeholder = s);
     });
   }
   unload() {

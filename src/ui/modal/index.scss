@@ -8,7 +8,7 @@
 .cui-modal {
   @include var.fixed;
   @include var.ov0;
-  z-index: 999;
+  z-index: 998;
   pointer-events: none;
   transition: var(--cui-time);
 
